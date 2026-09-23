@@ -21,7 +21,7 @@ const projects: Project[] = [
     link: "https://github.com/AkmalSharaf",
     status: "Final Year Project",
     description:
-      "AI-Powered Job Recommendation Platform - Finding a suitable part-time or full-time job has become increasingly challenging, especially in environments where job seekers struggle to match their skills with employer requirements and lack clarity about salary expectations. Our project addresses this problem by developing an intelligent job recommendation system powered by Natural Language Processing (NLP) and machine learning. The system is designed to analyze user-entered skills and interests, match them with available job descriptions, and provide personalized recommendations while also predicting expected salary ranges. Unlike traditional keyword-based systems that return broad or irrelevant results, our solution employs TF-IDF vectorization to represent job descriptions and user skills as numerical vectors, and Cosine Similarity to measure how closely they align, ensuring that recommendations are more accurate and skill-relevant. Additionally, we integrate a salary prediction model built using scikit-learn algorithms such as Linear Regression and Random Forest, trained on job-related datasets, and stored as a reusable .pkl file. This combination not only enhances job search efficiency but also provides candidates with a realistic salary estimate before applying. The uniqueness of this project lies in merging skill-based recommendations with predictive salary insights, offering a dual benefit that most existing platforms lack. Users gain tailored opportunities aligned to their abilities, while employers benefit from better-matched candidates, reducing mismatches in recruitment. The implementation leverages essential packages like pandas, numpy, joblib, and scikit-learn for data handling, processing, and model persistence. Ultimately, the system aims to bridge the gap between job seekers and opportunities, saving time, reducing uncertainty, and increasing satisfaction for both parties. By integrating advanced NLP with predictive analytics, this project creates a more transparent, efficient, and user-friendly approach to modern job searching.",
+      "AI-Powered Job Recommendation Platform - A system that uses NLP and machine learning to match job seekers with relevant job openings and predict salary ranges.",
   },
   {
     id: "appointment-system",
@@ -45,7 +45,6 @@ const projects: Project[] = [
   },
 ];
 ---
-
 <section
   id="projects"
   class="py-12 border-t border-[#ffffff10] text-[var(--white)]"
@@ -254,36 +253,45 @@ const projects: Project[] = [
   const prevBtn = document.getElementById("gallery-prev");
   const nextBtn = document.getElementById("gallery-next");
 
-  // @ts-ignore - projects is defined in the frontend
-  let currentId = null;
-  // @ts-ignore - projects is defined in the frontend
-  let currentIndex = 0;
+  // Declare the projects variable and Project interface for TypeScript
+  interface Project {
+    id: string;
+    title: string;
+    images: string[];
+    link: string;
+    status: string;
+    description: string;
+  }
+  declare const projects: Project[];
+
+  let currentId: string | null = null;
+  let currentIndex: number = 0;
 
   // Filter out job-recommender from gallery data
-  // @ts-ignore - projects is defined in the frontend
   const galleryProjects = projects.filter(p => p.id !== "job-recommender");
   const galleryData = Object.fromEntries(
-    galleryProjects.map(project => [
+    galleryProjects.map((project: Project) => [
       project.id,
       { title: project.title, images: project.images, description: project.description },
     ]),
   );
 
-  function getImages() {
+function getImages(): string[] {
+    if (currentId === null) return [];
     return galleryData[currentId]?.images ?? [];
   }
 
   function render() {
+    if (currentId === null) return;
     const project = galleryData[currentId];
     const images = getImages();
     const descEl = document.getElementById("gallery-description");
     if (!project || !images.length || !titleEl || !imageEl || !thumbsEl) return;
 
     titleEl.textContent = project.title;
-    if (imageEl && imageEl.src !== undefined) {
-      const imgEl = /** @type {HTMLImageElement} */ (imageEl);
-      imgEl.src = images[currentIndex];
-      imgEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
+    if (imageEl instanceof HTMLImageElement) {
+      imageEl.src = images[currentIndex];
+      imageEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
     }
     if (descEl) {
       descEl.textContent = project.description || "";

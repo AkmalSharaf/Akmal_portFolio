@@ -35,7 +35,7 @@ const LikeButton = () => {
 
     // Optimistic Update
     const previousLikes = likes;
-    setLikes((prev) => prev + 1);
+    setLikes((prev: number) => prev + 1);
     setIsLiked(true);
     setIsAnimating(true);
     localStorage.setItem("websiteIsLiked", "true");
