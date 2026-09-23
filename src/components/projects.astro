@@ -254,32 +254,30 @@ const projects: Project[] = [
   const prevBtn = document.getElementById("gallery-prev");
   const nextBtn = document.getElementById("gallery-next");
 
-  let currentId: string | null = null;
-  let currentIndex: number = 0;
+  let currentId = null;
+  let currentIndex = 0;
 
   // Filter out job-recommender from gallery data
-  const galleryProjects: Project[] = projects.filter((p): p is Project => p.id !== "job-recommender");
+  const galleryProjects = projects.filter(p => p.id !== "job-recommender");
   const galleryData = Object.fromEntries(
-    galleryProjects.map((project: Project) => [
+    galleryProjects.map(project => [
       project.id,
       { title: project.title, images: project.images, description: project.description },
     ]),
   );
 
-  function getImages(): string[] {
-    return currentId !== null && galleryData[currentId] ? galleryData[currentId].images : [];
+  function getImages() {
+    return galleryData[currentId]?.images ?? [];
   }
 
   function render() {
-    if (currentId === null || !galleryData[currentId]) return;
-    
     const project = galleryData[currentId];
     const images = getImages();
     const descEl = document.getElementById("gallery-description");
     if (!project || !images.length || !titleEl || !imageEl || !thumbsEl) return;
 
     titleEl.textContent = project.title;
-    if (imageEl instanceof HTMLImageElement) {
+    if (imageEl && imageEl.src !== undefined) {
       imageEl.src = images[currentIndex];
       imageEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
     }
@@ -288,7 +286,7 @@ const projects: Project[] = [
     }
     thumbsEl.innerHTML = images
       .map(
-        (src: string, index: number) => `
+        (src, index) => `
           <button type="button" data-thumb-index="${index}" class="shrink-0 rounded-lg overflow-hidden border ${
             index === currentIndex ? "border-[var(--sec)]" : "border-transparent"
           }">
@@ -299,7 +297,7 @@ const projects: Project[] = [
       .join("");
   }
 
-  function openGallery(id: string) {
+  function openGallery(id) {
     currentId = id;
     currentIndex = 0;
     if (overlay) overlay.hidden = false;
@@ -312,7 +310,7 @@ const projects: Project[] = [
     document.body.style.overflow = "";
   }
 
-  function showIndex(index: number) {
+  function showIndex(index) {
     const images = getImages();
     if (!images.length) return;
     currentIndex = (index + images.length) % images.length;
@@ -321,7 +319,7 @@ const projects: Project[] = [
 
   // Attach gallery open handlers to non-job-recommender project cards
   document.querySelectorAll('.group button[data-gallery-open]').forEach(button => {
-    button.addEventListener('click', function(this: HTMLElement) {
+    button.addEventListener('click', function() {
       const projectId = this.getAttribute('data-gallery-open');
       if (projectId && galleryData[projectId]) {
         openGallery(projectId);
@@ -336,8 +334,7 @@ const projects: Project[] = [
   prevBtn?.addEventListener("click", () => showIndex(currentIndex - 1));
   nextBtn?.addEventListener("click", () => showIndex(currentIndex + 1));
   thumbsEl?.addEventListener("click", (event) => {
-    const target = event.target as HTMLElement;
-    const thumb = target.closest("[data-thumb-index]");
+    const thumb = event.target.closest("[data-thumb-index]");
     if (!thumb) return;
     showIndex(Number(thumb.getAttribute("data-thumb-index")));
   });
