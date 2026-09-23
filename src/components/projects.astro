@@ -1,0 +1,349 @@
+---
+interface Project {
+  id: string;
+  title: string;
+  images: string[];
+  link: string;
+  status: string;
+  description: string;
+}
+
+const projects: Project[] = [
+  {
+    id: "job-recommender",
+    title: "AI-Powered Job Recommendation Platform",
+    images: [
+      "/images/parttime/1.png",
+      "/images/parttime/4.png",
+      "/images/parttime/2.png",
+      "/images/parttime/3.png",
+    ],
+    link: "https://github.com/AkmalSharaf",
+    status: "Final Year Project",
+    description:
+      "AI-Powered Job Recommendation Platform - Finding a suitable part-time or full-time job has become increasingly challenging, especially in environments where job seekers struggle to match their skills with employer requirements and lack clarity about salary expectations. Our project addresses this problem by developing an intelligent job recommendation system powered by Natural Language Processing (NLP) and machine learning. The system is designed to analyze user-entered skills and interests, match them with available job descriptions, and provide personalized recommendations while also predicting expected salary ranges. Unlike traditional keyword-based systems that return broad or irrelevant results, our solution employs TF-IDF vectorization to represent job descriptions and user skills as numerical vectors, and Cosine Similarity to measure how closely they align, ensuring that recommendations are more accurate and skill-relevant. Additionally, we integrate a salary prediction model built using scikit-learn algorithms such as Linear Regression and Random Forest, trained on job-related datasets, and stored as a reusable .pkl file. This combination not only enhances job search efficiency but also provides candidates with a realistic salary estimate before applying. The uniqueness of this project lies in merging skill-based recommendations with predictive salary insights, offering a dual benefit that most existing platforms lack. Users gain tailored opportunities aligned to their abilities, while employers benefit from better-matched candidates, reducing mismatches in recruitment. The implementation leverages essential packages like pandas, numpy, joblib, and scikit-learn for data handling, processing, and model persistence. Ultimately, the system aims to bridge the gap between job seekers and opportunities, saving time, reducing uncertainty, and increasing satisfaction for both parties. By integrating advanced NLP with predictive analytics, this project creates a more transparent, efficient, and user-friendly approach to modern job searching.",
+  },
+  {
+    id: "appointment-system",
+    title: "Appointment Management System (AI Chatbot)",
+    images: [
+      "/images/Appointment/appointment.png",
+    ],
+    link: "https://github.com/AkmalSharaf",
+    status: "Group Project",
+    description:
+      "Managed QA and testing, implemented chatbot workflows, and validated appointment flows using Cypress, Selenium, and Postman.",
+  },
+  {
+    id: "puzzle-game",
+    title: "MERN Stack Puzzle Game",
+    images: ["/images/BanaMath/1.png"],
+    link: "https://github.com/AkmalSharaf",
+    status: "Portfolio",
+    description:
+      "Built interactive gameplay, integrated external API data, and implemented scoring and level logic.",
+  },
+];
+---
+
+<section
+  id="projects"
+  class="py-12 border-t border-[#ffffff10] text-[var(--white)]"
+>
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">My work</h2>
+    <h3 class="text-4xl md:text-5xl font-medium mb-8">Projects</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {
+        projects.map((project) => (
+          <div class="group relative" id={`project-${project.id}`}>
+            {project.id === "job-recommender" ? (
+              <>
+                <button
+                  type="button"
+                  class="block w-full text-left"
+                  id="toggle-description"
+                >
+                  <div class="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mb-4 relative">
+                    <img
+                      src={project.images[0]}
+                      alt={project.title}
+                      class="w-full h-48 md:h-72 object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {project.images.length > 1 && (
+                      <span class="absolute bottom-3 right-3 text-xs px-2 py-1 rounded-full bg-[var(--background)]/70 text-[var(--white)]">
+                        {project.images.length} photos
+                      </span>
+                    )}
+                  </div>
+                </button>
+                <div class="flex items-center px-3 pt-2">
+                  <div class="flex-grow">
+                    <h4 class="text-2xl font-semibold">{project.title}</h4>
+                    <span class="py-1 text-sm text-[var(--white-icon)]">
+                      {project.status}
+                    </span>
+                  </div>
+                  <div class="flex gap-2 ml-auto">
+                    <a
+                      target="_blank"
+                      href={project.link}
+                      aria-label={`${project.title} GitHub`}
+                      class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-[var(--white)] transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[var(--component-bg)]/9c hover:bg-[var(--component-bg)]/9c"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="size-7"
+                      >
+                        <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div id="job-description" class="mt-2 text-sm text-[var(--white-icon)] leading-relaxed hidden">
+                  {project.description}
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  class="block w-full text-left"
+                  data-gallery-open={project.id}
+                  aria-label={`View ${project.title} screenshots`}
+                >
+                  <div class="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mb-4 relative">
+                    <img
+                      src={project.images[0]}
+                      alt={project.title}
+                      class="w-full h-48 md:h-72 object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {project.images.length > 1 && (
+                      <span class="absolute bottom-3 right-3 text-xs px-2 py-1 rounded-full bg-[var(--background)]/70 text-[var(--white)]">
+                        {project.images.length} photos
+                      </span>
+                    )}
+                  </div>
+                </button>
+                <div class="flex items-center px-3">
+                  <div class="flex-grow">
+                    <h4 class="text-2xl font-semibold">{project.title}</h4>
+                    <span class="py-1 text-sm text-[var(--white-icon)]">
+                      {project.status}
+                    </span>
+                    <p class="text-sm text-[var(--white-icon)] mt-2">
+                      {project.description}
+                    </p>
+                  </div>
+                  <div class="flex gap-2 ml-auto">
+                    <a
+                      target="_blank"
+                      href={project.link}
+                      aria-label={`${project.title} GitHub`}
+                      class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-[var(--white)] transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[var(--component-bg)]/9c hover:bg-[var(--component-bg)]/9c"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="size-7"
+                      >
+                        <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        ))
+      }
+    </div>
+    <a
+      target="_blank"
+      href="https://github.com"
+      aria-label="GitHub"
+      class="w-full flex items-center justify-center gap-2 mt-9 text-[var(--white-icon)] hover:text-[var(--white)] transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-full bg-[var(--component-bg)]/9c hover:bg-[var(--component-bg)]/9c hover:scale-105"
+    >
+      <span class="md:text-lg text-md">More projects on</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+      >
+        <path
+          d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
+        ></path>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- Gallery for other projects (appointment-system and puzzle-game) -->
+<div
+  id="project-gallery"
+  class="project-gallery fixed inset-0 z-[9999] items-center justify-center bg-[var(--background)]/85 p-4 md:p-10"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="gallery-title"
+  hidden
+>
+  <div class="relative w-full max-w-5xl">
+    <div class="flex items-center justify-between mb-4">
+      <h4 id="gallery-title" class="text-[var(--white)] text-lg md:text-2xl font-medium pr-10"></h4>
+      <button
+        id="gallery-close"
+        type="button"
+        aria-label="Close gallery"
+        class="text-[var(--white-icon)] hover:text-[var(--white)] text-3xl leading-none"
+      >
+        ×
+      </button>
+    </div>
+    <div class="relative bg-[var(--component-bg)] rounded-2xl overflow-hidden">
+      <img
+        id="gallery-image"
+        src=""
+        alt=""
+        class="w-full max-h-[70vh] object-contain bg-[var(--background)]"
+      />
+      <button
+        id="gallery-prev"
+        type="button"
+        aria-label="Previous image"
+        class="absolute left-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-[var(--background)]/60 text-[var(--white)] hover:bg-[var(--background)]/80"
+      >
+        ‹
+      </button>
+      <button
+        id="gallery-next"
+        type="button"
+        aria-label="Next image"
+        class="absolute right-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-[var(--background)]/60 text-[var(--white)] hover:bg-[var(--background)]/80"
+      >
+        ›
+      </button>
+    </div>
+    <div id="gallery-thumbs" class="flex gap-3 mt-4 overflow-x-auto pb-2"></div>
+    <div
+      id="gallery-description"
+      class="mt-4 text-[var(--white-icon)] text-sm md:text-base leading-relaxed max-h-48 overflow-y-auto pr-2"
+    ></div>
+  </div>
+</div>
+
+<script>
+  // Toggle description for job recommender
+  document.getElementById('toggle-description')?.addEventListener('click', function() {
+    const description = document.getElementById('job-description');
+    if (description) {
+      description.classList.toggle('hidden');
+    }
+  });
+
+  // Gallery functionality for other projects
+  const overlay = document.getElementById("project-gallery");
+  const titleEl = document.getElementById("gallery-title");
+  const imageEl = document.getElementById("gallery-image");
+  const thumbsEl = document.getElementById("gallery-thumbs");
+  const closeBtn = document.getElementById("gallery-close");
+  const prevBtn = document.getElementById("gallery-prev");
+  const nextBtn = document.getElementById("gallery-next");
+
+  // Filter out job-recommender from gallery data
+  const galleryProjects = projects.filter(p => p.id !== "job-recommender");
+  const galleryData = Object.fromEntries(
+    galleryProjects.map((project) => [
+      project.id,
+      { title: project.title, images: project.images, description: project.description },
+    ]),
+  );
+
+  function getImages() {
+    return galleryData[currentId]?.images ?? [];
+  }
+
+  function render() {
+    const project = galleryData[currentId];
+    const images = getImages();
+    const descEl = document.getElementById("gallery-description");
+    if (!project || !images.length || !titleEl || !imageEl || !thumbsEl) return;
+
+    titleEl.textContent = project.title;
+    imageEl.src = images[currentIndex];
+    imageEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
+    if (descEl) {
+      descEl.textContent = project.description || "";
+    }
+    thumbsEl.innerHTML = images
+      .map(
+        (src, index) => `
+          <button type="button" data-thumb-index="${index}" class="shrink-0 rounded-lg overflow-hidden border ${
+            index === currentIndex ? "border-[var(--sec)]" : "border-transparent"
+          }">
+            <img src="${src}" alt="" class="h-16 w-24 object-cover" />
+          </button>
+        `,
+      )
+      .join("");
+  }
+
+  function openGallery(id) {
+    currentId = id;
+    currentIndex = 0;
+    if (overlay) overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    render();
+  }
+
+  function closeGallery() {
+    if (overlay) overlay.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  function showIndex(index) {
+    const images = getImages();
+    if (!images.length) return;
+    currentIndex = (index + images.length) % images.length;
+    render();
+  }
+
+  // Attach gallery open handlers to non-job-recommender project cards
+  document.querySelectorAll('.group button[data-gallery-open]').forEach(button => {
+    button.addEventListener('click', function() {
+      const projectId = this.getAttribute('data-gallery-open');
+      if (projectId && galleryData[projectId]) {
+        openGallery(projectId);
+      }
+    });
+  });
+
+  closeBtn?.addEventListener("click", closeGallery);
+  overlay?.addEventListener("click", (event) => {
+    if (event.target === overlay) closeGallery();
+  });
+  prevBtn?.addEventListener("click", () => showIndex(currentIndex - 1));
+  nextBtn?.addEventListener("click", () => showIndex(currentIndex + 1));
+  thumbsEl?.addEventListener("click", (event) => {
+    const thumb = event.target.closest("[data-thumb-index]");
+    if (!thumb) return;
+    showIndex(Number(thumb.getAttribute("data-thumb-index")));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (overlay?.hidden) return;
+    if (event.key === "Escape") closeGallery();
+    if (event.key === "ArrowLeft") showIndex(currentIndex - 1);
+    if (event.key === "ArrowRight") showIndex(currentIndex + 1);
+  });
+</script>
+
+<style is:global>
+  #project-gallery:not([hidden]) {
+    display: flex;
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+const project = {
+  title: "AI-Powered Job Recommendation Platform",
+  status: "Final Year Project",
+  images: [
+    "/images/parttime/1.png",
+    "/images/parttime/4.png",
+    "/images/parttime/2.png",
+    "/images/parttime/3.png",
+  ],
+  description: `AI-Powered Job Recommendation Platform - Finding a suitable part-time or full-time job has become increasingly challenging, especially in environments where job seekers struggle to match their skills with employer requirements and lack clarity about salary expectations. Our project addresses this problem by developing an intelligent job recommendation system powered by Natural Language Processing (NLP) and machine learning. The system is designed to analyze user-entered skills and interests, match them with available job descriptions, and provide personalized recommendations while also predicting expected salary ranges. Unlike traditional keyword-based systems that return broad or irrelevant results, our solution employs TF-IDF vectorization to represent job descriptions and user skills as numerical vectors, and Cosine Similarity to measure how closely they align, ensuring that recommendations are more accurate and skill-relevant. Additionally, we integrate a salary prediction model built using scikit-learn algorithms such as Linear Regression and Random Forest, trained on job-related datasets, and stored as a reusable .pkl file. This combination not only enhances job search efficiency but also provides candidates with a realistic salary estimate before applying. The uniqueness of this project lies in merging skill-based recommendations with predictive salary insights, offering a dual benefit that most existing platforms lack. Users gain tailored opportunities aligned to their abilities, while employers benefit from better-matched candidates, reducing mismatches in recruitment. The implementation leverages essential packages like pandas, numpy, joblib, and scikit-learn for data handling, processing, and model persistence. Ultimately, the system aims to bridge the gap between job seekers and opportunities, saving time, reducing uncertainty, and increasing satisfaction for both parties. By integrating advanced NLP with predictive analytics, this project creates a more transparent, efficient, and user-friendly approach to modern job searching.`,
+  github: "https://github.com/AkmalSharaf",
+};
+---
+
+<Layout title={`${project.title} - Portfolio`}>
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4">
+      <!-- Back to projects -->
+      <div class="mb-8">
+        <a
+          href="/"
+          class="inline-flex items-center text-sm text-[var(--white-icon)] hover:text-[var(--sec)] transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            class="w-4 h-4 mr-2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Back to Projects
+        </a>
+      </div>
+
+      <!-- Project Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">{project.title}</h1>
+        <p class="text-sm text-[var(--white-icon)]">{project.status}</p>
+      </div>
+
+      <!-- Project Images Gallery -->
+      <div class="mb-8">
+        <div class="grid gap-4 md:grid-cols-2">
+          {project.images.map((img, index) => (
+            <img
+              src={img}
+              alt={`${project.title} screenshot ${index + 1}`}
+              key={index}
+              class="rounded-xl w-full h-52 object-cover"
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Project Description -->
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Project Overview</h2>
+        <p class="text-[var(--white-icon)] leading-relaxed">
+          {project.description}
+        </p>
+      </div>
+
+      <!-- GitHub Link -->
+      <div class="mb-8">
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center px-6 py-3 bg-[var(--secondary)] text-[var(--white)] rounded-xl hover:bg-[var(--secondary)]/90 transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            class="w-5 h-5 mr-2"
+          >
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+            />
+          </svg>
+          View Source Code
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
