@@ -258,27 +258,31 @@ const projects: Project[] = [
   let currentIndex: number = 0;
 
   // Filter out job-recommender from gallery data
-  const galleryProjects = projects.filter((p): p is { id: string; title: string; images: string[]; description: string } => p.id !== "job-recommender");
+  const galleryProjects: Project[] = projects.filter((p): p is Project => p.id !== "job-recommender");
   const galleryData = Object.fromEntries(
-    galleryProjects.map((project) => [
+    galleryProjects.map((project: Project) => [
       project.id,
       { title: project.title, images: project.images, description: project.description },
     ]),
   );
 
-  function getImages() {
-    return galleryData[currentId]?.images ?? [];
+  function getImages(): string[] {
+    return currentId !== null && galleryData[currentId] ? galleryData[currentId].images : [];
   }
 
   function render() {
+    if (currentId === null || !galleryData[currentId]) return;
+    
     const project = galleryData[currentId];
     const images = getImages();
     const descEl = document.getElementById("gallery-description");
     if (!project || !images.length || !titleEl || !imageEl || !thumbsEl) return;
 
     titleEl.textContent = project.title;
-    imageEl.src = images[currentIndex];
-    imageEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
+    if (imageEl instanceof HTMLImageElement) {
+      imageEl.src = images[currentIndex];
+      imageEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
+    }
     if (descEl) {
       descEl.textContent = project.description || "";
     }
@@ -317,7 +321,7 @@ const projects: Project[] = [
 
   // Attach gallery open handlers to non-job-recommender project cards
   document.querySelectorAll('.group button[data-gallery-open]').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function(this: HTMLElement) {
       const projectId = this.getAttribute('data-gallery-open');
       if (projectId && galleryData[projectId]) {
         openGallery(projectId);
