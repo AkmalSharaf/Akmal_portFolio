@@ -254,9 +254,7 @@ const projects: Project[] = [
   const prevBtn = document.getElementById("gallery-prev");
   const nextBtn = document.getElementById("gallery-next");
 
-  /** @type {string | null} */
   let currentId = null;
-  /** @type {number} */
   let currentIndex = 0;
 
   // Filter out job-recommender from gallery data
@@ -268,9 +266,6 @@ const projects: Project[] = [
     ]),
   );
 
-  /**
-   * @returns {string[]}
-   */
   function getImages() {
     return galleryData[currentId]?.images ?? [];
   }
@@ -283,8 +278,7 @@ const projects: Project[] = [
 
     titleEl.textContent = project.title;
     if (imageEl && imageEl.src !== undefined) {
-      /** @type {HTMLImageElement} */
-      const imgEl = imageEl;
+      const imgEl = /** @type {HTMLImageElement} */ (imageEl);
       imgEl.src = images[currentIndex];
       imgEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
     }
@@ -293,11 +287,6 @@ const projects: Project[] = [
     }
     thumbsEl.innerHTML = images
       .map(
-        /** 
-         * @param {string} src 
-         * @param {number} index
-         * @returns {string}
-         */
         (src, index) => `
           <button type="button" data-thumb-index="${index}" class="shrink-0 rounded-lg overflow-hidden border ${
             index === currentIndex ? "border-[var(--sec)]" : "border-transparent"
@@ -309,9 +298,6 @@ const projects: Project[] = [
       .join("");
   }
 
-  /**
-   * @param {string} id
-   */
   function openGallery(id) {
     currentId = id;
     currentIndex = 0;
@@ -325,9 +311,6 @@ const projects: Project[] = [
     document.body.style.overflow = "";
   }
 
-  /**
-   * @param {number} index
-   */
   function showIndex(index) {
     const images = getImages();
     if (!images.length) return;
