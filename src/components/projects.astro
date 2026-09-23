@@ -256,6 +256,7 @@ const projects: Project[] = [
 
   // @ts-ignore - projects is defined in the frontend
   let currentId = null;
+  // @ts-ignore - projects is defined in the frontend
   let currentIndex = 0;
 
   // Filter out job-recommender from gallery data
@@ -289,7 +290,7 @@ const projects: Project[] = [
     }
     thumbsEl.innerHTML = images
       .map(
-        (src, index) => `
+        (src: string, index: number) => `
           <button type="button" data-thumb-index="${index}" class="shrink-0 rounded-lg overflow-hidden border ${
             index === currentIndex ? "border-[var(--sec)]" : "border-transparent"
           }">
@@ -300,7 +301,7 @@ const projects: Project[] = [
       .join("");
   }
 
-  function openGallery(id) {
+  function openGallery(id: string) {
     currentId = id;
     currentIndex = 0;
     if (overlay) overlay.hidden = false;
@@ -313,7 +314,7 @@ const projects: Project[] = [
     document.body.style.overflow = "";
   }
 
-  function showIndex(index) {
+  function showIndex(index: number) {
     const images = getImages();
     if (!images.length) return;
     currentIndex = (index + images.length) % images.length;
@@ -322,7 +323,7 @@ const projects: Project[] = [
 
   // Attach gallery open handlers to non-job-recommender project cards
   document.querySelectorAll('.group button[data-gallery-open]').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function(this: HTMLElement) {
       const projectId = this.getAttribute('data-gallery-open');
       if (projectId && galleryData[projectId]) {
         openGallery(projectId);
