@@ -254,10 +254,12 @@ const projects: Project[] = [
   const prevBtn = document.getElementById("gallery-prev");
   const nextBtn = document.getElementById("gallery-next");
 
+  // @ts-ignore - projects is defined in the frontend
   let currentId = null;
   let currentIndex = 0;
 
   // Filter out job-recommender from gallery data
+  // @ts-ignore - projects is defined in the frontend
   const galleryProjects = projects.filter(p => p.id !== "job-recommender");
   const galleryData = Object.fromEntries(
     galleryProjects.map(project => [
