@@ -254,11 +254,15 @@ const projects: Project[] = [
   const prevBtn = document.getElementById("gallery-prev");
   const nextBtn = document.getElementById("gallery-next");
 
+  /** @type {string | null} */
   let currentId = null;
+  /** @type {number} */
   let currentIndex = 0;
 
   // Filter out job-recommender from gallery data
+  /** @type {import('../../src/components/projects.astro').Project[]} */
   const galleryProjects = projects.filter(p => p.id !== "job-recommender");
+  /** @type {Record<string, {title: string, images: string[], description: string}>} */
   const galleryData = Object.fromEntries(
     galleryProjects.map(project => [
       project.id,
@@ -266,6 +270,9 @@ const projects: Project[] = [
     ]),
   );
 
+  /**
+   * @returns {string[]}
+   */
   function getImages() {
     return galleryData[currentId]?.images ?? [];
   }
@@ -278,14 +285,21 @@ const projects: Project[] = [
 
     titleEl.textContent = project.title;
     if (imageEl && imageEl.src !== undefined) {
-      imageEl.src = images[currentIndex];
-      imageEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
+      /** @type {HTMLImageElement} */
+      const imgEl = imageEl;
+      imgEl.src = images[currentIndex];
+      imgEl.alt = `${project.title} screenshot ${currentIndex + 1}`;
     }
     if (descEl) {
       descEl.textContent = project.description || "";
     }
     thumbsEl.innerHTML = images
       .map(
+        /** 
+         * @param {string} src 
+         * @param {number} index
+         * @returns {string}
+         */
         (src, index) => `
           <button type="button" data-thumb-index="${index}" class="shrink-0 rounded-lg overflow-hidden border ${
             index === currentIndex ? "border-[var(--sec)]" : "border-transparent"
@@ -297,6 +311,9 @@ const projects: Project[] = [
       .join("");
   }
 
+  /**
+   * @param {string} id
+   */
   function openGallery(id) {
     currentId = id;
     currentIndex = 0;
@@ -310,6 +327,9 @@ const projects: Project[] = [
     document.body.style.overflow = "";
   }
 
+  /**
+   * @param {number} index
+   */
   function showIndex(index) {
     const images = getImages();
     if (!images.length) return;
@@ -319,7 +339,7 @@ const projects: Project[] = [
 
   // Attach gallery open handlers to non-job-recommender project cards
   document.querySelectorAll('.group button[data-gallery-open]').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', /** @param {MouseEvent} event */ function() {
       const projectId = this.getAttribute('data-gallery-open');
       if (projectId && galleryData[projectId]) {
         openGallery(projectId);
