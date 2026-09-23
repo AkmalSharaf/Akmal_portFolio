@@ -260,9 +260,7 @@ const projects: Project[] = [
   let currentIndex = 0;
 
   // Filter out job-recommender from gallery data
-  /** @type {import('../../src/components/projects.astro').Project[]} */
   const galleryProjects = projects.filter(p => p.id !== "job-recommender");
-  /** @type {Record<string, {title: string, images: string[], description: string}>} */
   const galleryData = Object.fromEntries(
     galleryProjects.map(project => [
       project.id,
@@ -339,7 +337,7 @@ const projects: Project[] = [
 
   // Attach gallery open handlers to non-job-recommender project cards
   document.querySelectorAll('.group button[data-gallery-open]').forEach(button => {
-    button.addEventListener('click', /** @param {MouseEvent} event */ function() {
+    button.addEventListener('click', function() {
       const projectId = this.getAttribute('data-gallery-open');
       if (projectId && galleryData[projectId]) {
         openGallery(projectId);
@@ -354,7 +352,8 @@ const projects: Project[] = [
   prevBtn?.addEventListener("click", () => showIndex(currentIndex - 1));
   nextBtn?.addEventListener("click", () => showIndex(currentIndex + 1));
   thumbsEl?.addEventListener("click", (event) => {
-    const thumb = event.target.closest("[data-thumb-index]");
+    const target = event.target as HTMLElement;
+    const thumb = target.closest("[data-thumb-index]");
     if (!thumb) return;
     showIndex(Number(thumb.getAttribute("data-thumb-index")));
   });
