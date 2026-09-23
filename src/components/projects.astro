@@ -254,8 +254,11 @@ const projects: Project[] = [
   const prevBtn = document.getElementById("gallery-prev");
   const nextBtn = document.getElementById("gallery-next");
 
+  let currentId: string | null = null;
+  let currentIndex: number = 0;
+
   // Filter out job-recommender from gallery data
-  const galleryProjects = projects.filter(p => p.id !== "job-recommender");
+  const galleryProjects = projects.filter((p): p is { id: string; title: string; images: string[]; description: string } => p.id !== "job-recommender");
   const galleryData = Object.fromEntries(
     galleryProjects.map((project) => [
       project.id,
@@ -281,7 +284,7 @@ const projects: Project[] = [
     }
     thumbsEl.innerHTML = images
       .map(
-        (src, index) => `
+        (src: string, index: number) => `
           <button type="button" data-thumb-index="${index}" class="shrink-0 rounded-lg overflow-hidden border ${
             index === currentIndex ? "border-[var(--sec)]" : "border-transparent"
           }">
@@ -292,7 +295,7 @@ const projects: Project[] = [
       .join("");
   }
 
-  function openGallery(id) {
+  function openGallery(id: string) {
     currentId = id;
     currentIndex = 0;
     if (overlay) overlay.hidden = false;
@@ -305,7 +308,7 @@ const projects: Project[] = [
     document.body.style.overflow = "";
   }
 
-  function showIndex(index) {
+  function showIndex(index: number) {
     const images = getImages();
     if (!images.length) return;
     currentIndex = (index + images.length) % images.length;
@@ -329,7 +332,8 @@ const projects: Project[] = [
   prevBtn?.addEventListener("click", () => showIndex(currentIndex - 1));
   nextBtn?.addEventListener("click", () => showIndex(currentIndex + 1));
   thumbsEl?.addEventListener("click", (event) => {
-    const thumb = event.target.closest("[data-thumb-index]");
+    const target = event.target as HTMLElement;
+    const thumb = target.closest("[data-thumb-index]");
     if (!thumb) return;
     showIndex(Number(thumb.getAttribute("data-thumb-index")));
   });

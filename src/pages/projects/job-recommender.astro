@@ -43,19 +43,18 @@ const project = {
         <p class="text-sm text-[var(--white-icon)]">{project.status}</p>
       </div>
 
-      <!-- Project Images Gallery -->
-      <div class="mb-8">
-        <div class="grid gap-4 md:grid-cols-2">
-          {project.images.map((img, index) => (
-            <img
-              src={img}
-              alt={`${project.title} screenshot ${index + 1}`}
-              key={index}
-              class="rounded-xl w-full h-52 object-cover"
-            />
-          ))}
-        </div>
-      </div>
+<!-- Project Images Gallery -->
+       <div class="mb-8">
+         <div class="grid gap-4 md:grid-cols-2">
+           {project.images.map((img, index) => (
+             <img
+               src={img}
+               alt={`${project.title} screenshot ${index + 1}`}
+               class="rounded-xl w-full h-52 object-cover"
+             />
+           ))}
+         </div>
+       </div>
 
       <!-- Project Description -->
       <div class="mb-8">
